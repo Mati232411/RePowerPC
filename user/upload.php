@@ -10,8 +10,8 @@ $secure="https";
 } else {
 $secure="http";
 }
-if( $_SERVER['SERVER_NAME'] == "89.186.17.159") {
-$adres = "89.186.17.159:8079";
+if( $_SERVER['SERVER_NAME'] == "") {
+$adres = "";
 } else {
 $adres = $_SERVER['SERVER_NAME'];
 }
