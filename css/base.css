@@ -1,0 +1,54 @@
+.signup {
+position: absolute;
+  background-color: white;
+  right: 10px;
+  width: 200px;
+  height: 60px;
+  border: 3px solid black;
+}
+.rest {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;    
+   width: 200px;	   
+   height: auto;  
+    border: 3px solid black;   
+    background-color: white;
+}
+.links {
+      background-color: white;
+      position: absolute;
+      left: 10px;
+      width: 200px;
+      height: 60px;
+      border: 3px solid black;
+    }
+
+body {
+	 background-image: url("../data/1.png");
+}
+.login {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /*centers items on the line (the x-axis by default)*/
+  align-items: center; /*centers items on the cross-axis (y by default)*/
+}
+
+.btn{
+  width: 15rem;
+  height: auto;
+  border: 3px solid black;   
+  background-color: white;
+  margin: auto;
+}
+
+.signer {
+  width: 20rem;
+  height: 20rem;
+  border: 3px solid black;   
+  background-color: white;
+  margin: auto;
+}

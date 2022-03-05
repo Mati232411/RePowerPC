@@ -1,0 +1,85 @@
+.rest {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;    
+    width: 200px;	     
+    overflow: hidden;
+
+    height: auto;
+    border: 3px solid black;   
+    background-color: white;
+}
+.settings {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;    
+  width: 500px;	     
+  border: 3px solid black;   
+  background-color: white;
+}
+.srest {
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center; /*centers items on the line (the x-axis by default)*/
+      align-items: center; /*centers items on the cross-axis (y by default)*/
+    }
+.btn{
+      width: 15rem;
+      height: auto;
+      border: 3px solid black;   
+      background-color: white;
+      margin: auto;
+    }
+.secure {
+      position:absolute;                 
+      bottom:0;  
+      left:10px;
+      height: auto;
+      width: auto;
+      border: 3px solid black;   
+      background-color: white;
+      justify-content: center;
+      align-items: center;
+  }
+.gif {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  width: 200px;
+  height: 60px;
+  left: auto;
+  height: auto;
+  width: auto;
+  border: 3px solid black;   
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+}
+.files {
+width: 800px;
+height: auto;
+border: 15px solid black;
+background-color: white;
+padding: 50px;
+margin: 20px;
+}
+.links {
+  border: 3px solid black;
+  background-color: snow;
+  height: auto;
+  width: auto;
+  position: absolute;
+  left: auto;
+  top: auto;
+}
+.signup {
+  position: absolute;
+    background-color: white;
+    right: 10px;
+    width: 200px;
+    height: 60px;
+    border: 3px solid black;
+  }
