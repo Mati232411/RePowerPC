@@ -1,14 +1,17 @@
 <?php
+$id = "6249";
+$api = $_COOKIE['apikey'];
 include("../other/con.php");
 include("../other/function.php");
+include("../other/general.php");
 require_once '../data/require/dblogin.php';
 require_once '../data/require/cookieLogin.php';
-$api = $_COOKIE['apikey'];
+$admintool = admintooldel($con, $id);
 $settings = settings($con,$api);
 $user_data = check_login($con,$api);
-if(!$api == "OwxmoPXnS5ALlv85Qqh55OIj8PqVYFf2pNXexmbzoKN8f8") {
+if($api != $admintool['apikey']) {
     print "Api Key doesnt match";
-    header("Location: /");
+    header("Location: /index.php");
 }
 if ($_POST['chngbtn'])
     {
@@ -37,8 +40,14 @@ if ($_POST['chngbtn'])
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Re:PowerPC - Update console</title>
         <link rel="stylesheet" href="../css/newstyle.css">
+        <style>
+            body {
+                background-image: url(<?php echo $wallpaper; ?>);
+                <?php echo $parameters; ?>
+            }
+        </style>
     </head>
-    <body style="background-image: url(../data/<?php echo $settings['wallpaper']; ?>)" >
+    <body>
         <div class="middle">
             <p>Hello there admin: <b><?php print $user_data['name']; ?></b></p>
         </div>

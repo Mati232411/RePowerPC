@@ -1,12 +1,12 @@
 <?php
-header('Content-Type: application/json');
 require_once '../data/require/dblogin.php';
-
 // check if user is allowed to upload
 if(!empty($_POST['key'])){
     $key=$_POST['key'];
 }else if(!empty($_COOKIE['apikey'])){
     $key=$_COOKIE['apikey'];
+    $api=$key;
+    include("../other/general.php");
 }else{
     die('{"success": false, "msg": "Please provide an API key"}');
 }
@@ -32,8 +32,8 @@ if($file['size']>$user['maxSize']){
 // Hash the file to prevent uploading the same file multiple times, and generate a file name
 // If an identical file exists, a new link is generated but points to the same file
 // also find file type
-$uploadPath="/var/www/srv/files/{$key}/";
-$thmbnlPath=$conf['thumbnailsPath'];
+$uploadPath="$uploadlocation{$key}/";
+$thmbnlPath="$thumblocation";
 $thmbnl=0;
 $fileType=mime_content_type($file['tmp_name']);
 $hash=hash_file('md5', $file['tmp_name']);
@@ -107,8 +107,9 @@ while($user['actSize']>$user['maxSize']){
 // The uploaded file isn't marked as "important" by default. If it is added in the database before the old files get deleted,
 // it will be deleted if all the other files are "important" and the user reaches his upload limit.
 $qf->execute([htmlentities($file['name']), $fileType, $file['size'], $filename, $thmbnl, $hash, $user['id']]);
-
-// Return the URL
-echo '{"success":true,"url":"'.$conf['url'].$filename.'"}';
+if( $settings['lite'] == "1"){
 header("Location: ../user/files.php");
+} else {
+    die;
+}
 ?>

@@ -1,20 +1,8 @@
 <?php
+$api = $_COOKIE['apikey'];
 require_once '../data/require/dblogin.php';
 require_once '../data/require/cookieLogin.php';
-include("../other/con.php");
-include("../other/function.php");
-$api = $_COOKIE['apikey'];
-$user_data = check_login($con,$api);
-$settings = settings($con,$api);
-$gif = $settings['gif'];
-if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
-$secure="Yes";
-}
-if( $_SERVER['SERVER_NAME'] == "89.186.17.159") {
-    $adres = "89.186.17.159:8079";
-    } else {
-    $adres = $_SERVER['SERVER_NAME'];
-    }
+include("../other/general.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,20 +10,26 @@ if( $_SERVER['SERVER_NAME'] == "89.186.17.159") {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/newstyle.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script src="../scripts.js"></script>
-        <link rel="icon" type="image/x-icon" href="/data/icon.png">
+                <link rel="icon" type="image/x-icon" href="/data/icon.png">
         <title>Re:PowerPC - Home</title>
+        <style>
+            body {
+                background-image: url(<?php echo $wallpaper; ?>);
+                <?php echo $parameters; ?>
+            }
+        </style>
     </head>
-    <body style="background-image: url(../data/<?php echo $settings['wallpaper']; ?>)"><div class="container">
+    <body><div class="container">
         <div class="middle"><center>
             <b><h2>Re:PowerPC</h2></b>
             <p>The PowerPC is back!!</p></br>
         </center></div>
         <div class="rightbox">
-            <p></p>
-         Welcome <b><?php echo $user_data['name']; ?></b></br>
-       </br>
+	    <p></p>
+	<img src="http://<?php echo $adres; ?>/pfp/<?php echo $settings['pfp']; ?>" height="96" width="96"></br>
+
+	<p>Welcome <b><?php echo $user_data['name']; ?></b></p>
+    
        <form action="usetting.php"><input id="button" type="submit" value="Settings"></form>
        <form action="/other/logout.php"><input id="button" type="submit" value="Logout"></form>
         <p></p>    
@@ -43,6 +37,7 @@ if( $_SERVER['SERVER_NAME'] == "89.186.17.159") {
         <div class="leftbox">
         <p></p>
                 <form action="files.php"><input id="button" type="submit" value="Disk"></form>
+ <form action="posts.php"><input id="button" type="submit" value="Community"></form>
                 <form action="apiinfo.php"><input id="button" type="submit" value="User info"></form>
                 <form action="/changelog.php"><input id="button" type="submit" value="Changelog"></form>
                 <form action="about.php"><input id="button" type="submit" value="About this website"></form>
@@ -58,7 +53,13 @@ if( $_SERVER['SERVER_NAME'] == "89.186.17.159") {
     <b>If you want to go SSL click here </b><a href="https://<?php print $adres; ?>">SSL</a>
     </div>
     <div class="gif" <?php if($gif == '0'){ echo 'style="display:none"'; } ?>>
-    <a href="https://www.debian.org" link><img src="/data/pix/1.gif"></a><p></p><img src="/data/pix/2.gif"><a href="https://landchad.net/"><img src="/data/pix/landchad.gif" alt="LandChad.net"></a>
+    <a href="https://www.debian.org" link><img src="/data/pix/1.gif"></a>
+<?php if( $settings['custom_gif'] != "0" ) {
+$customgif = $settings['custom_gif'];
+echo "<img src=http://$adres/pfp/$customgif >";
+}
+?>
+<p></p><img src="/data/pix/2.gif"><a href="https://landchad.net/"><img src="/data/pix/landchad.gif" alt="LandChad.net"></a>
     </div>
 </div></body>
 </html>

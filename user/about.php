@@ -1,9 +1,9 @@
 <?php
 include("../other/con.php");
 include("../other/function.php");
-if(empty($_COOKIE['apikey'])) {
-$link = "/";
-$css = "base.css";
+if(empty($_COOKIE['apikey'])) { // Checks if user logged in if not displays basic background and if yes displays user choice
+$link = "/"; // Where to back button should lead
+$css = "base.css"; // Choice of css file
 } else {
 $link = "account.php";
 $css = "style.css";
@@ -12,9 +12,7 @@ if(empty($_COOKIE['apikey'])) {
     $backg = 'background-image: url(/data/1.png);';
 } else {
     $api = $_COOKIE['apikey'];
-    $settings = settings($con,$api);
-    $walld = $api = $settings['wallpaper'];
-    $backg = "background-image: url(/data/$walld);";
+    include("../other/general.php");
 }
 ?>
 <!DOCTYPE html>
@@ -27,8 +25,10 @@ if(empty($_COOKIE['apikey'])) {
         <link rel="icon" type="image/x-icon" href="/data/icon.png">
         <style>
             body {
-                <?php print $backg; ?>
-            }
+                background-image: url(<?php echo $wallpaper; ?>);
+                <?php echo $parameters; ?>
+            }include("../other/general.php");
+
         </style>
     </head>
     <body >

@@ -1,7 +1,8 @@
 <?php
+include("../con.php");
+include("../function.php");
 header('Content-Type: application/json');
-require_once '../data/require/dblogin.php';
-
+require_once '../../data/require/dblogin.php';
 // check if user is allowed to upload
 if(!empty($_POST['key'])){
     $key=$_POST['key'];
@@ -32,28 +33,21 @@ if($file['size']>$user['maxSize']){
 // Hash the file to prevent uploading the same file multiple times, and generate a file name
 // If an identical file exists, a new link is generated but points to the same file
 // also find file type
-$uploadPath="/var/www/srv/files/{$key}/";
-$thmbnl=0;
 $fileType=mime_content_type($file['tmp_name']);
-$hash=hash_file('md5', $file['tmp_name']);
-if(strrpos($file['name'], '.')==false||strlen($file['name'])-strrpos($file['name'], '.')>7){
-    do{
-        $filename=substr(str_shuffle('azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN'), 0, 5);
-    }while(file_exists($uploadPath.$filename));
-}else{
-    do{
-        $filename=substr(str_shuffle('azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN'), 0, 5).substr($file['name'], strrpos($file['name'], '.'));
-    }while(file_exists($uploadPath.$filename));
-}
-$qExists=$db->prepare('SELECT id, newName, thumbnail FROM files WHERE hash=? AND deleted=0');
-$qExists->execute([$hash]);
-$qExists=$qExists->fetch();
-if(empty($qExists)){
-    if(!$fileType == "image/jpeg" || !$fileType == "image/png" || !$fileType == "image/gif" ) {
-       header("Location: /user/usetting.php");
-    }
+$uploadPath="/srv/www/pfp/";
+$name = $_FILES["file"]["name"];
+$ext = end((explode(".", $name)));
+if($fileType == "image/jpeg" || $fileType == "image/png" || $fileType == "image/gif" || $fileType == "image/jpg" ) {
+    
+	$filename="$key.$ext";
     move_uploaded_file($file['tmp_name'], $uploadPath.$filename);
+    $api=$key;
+    $data=$filename;
+    updatepfp($con,$api,$data);
+    header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+    header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+    header("Location: /");
+    } else {  
+    header("Location: /user/usetting.php");
 }
-echo '{"success":true,"url":"'.$conf['url'].$filename.'"}';
-header("Location: /user/usetting.php");
 ?>

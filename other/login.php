@@ -1,24 +1,24 @@
 <?php 
-include("../other/con.php");
-include("../other/function.php");
+include("con.php");
+include("function.php");
 // Nginx handles brute-force attacks, not this script or any other
-require_once '../data/require/dblogin.php';
 // Verify login informations
-$q=$db->prepare('SELECT id, pwd, apikey FROM users WHERE name=?');
-$q->execute([$_POST['name']]);
-$q=$q->fetch();
-if(empty($q['pwd'])){
+$uid = $_POST['name'];
+$query = "select * from users where name = '$uid'";
+$result = mysqli_query($con,$query);
+$data = mysqli_fetch_assoc($result);
+if(empty($data['pwd'])){
     die('Wrong username');
 }
-if(password_verify($_POST['pwd'], $q['pwd'])==false){
+if(password_verify($_POST['pwd'], $data['pwd'])==false){
     die('Wrong password');
 }
 // Setting "expire" to 0 so the cookie is deletted when the browser closes
 if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
-setcookie('apikey', $q['apikey'], 0, '/', null, true);
+setcookie('apikey', $data['apikey'], 0, '/', null, true);
 } else {
-    setcookie('apikey', $q['apikey'], 0, '/', null);
+    setcookie('apikey', $data['apikey'], 0, '/', null);
 }
-header("Location: /user/account.php");
+header("Location: /");
 exit;
 ?>

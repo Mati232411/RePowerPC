@@ -2,12 +2,10 @@
 include("other/con.php");
 include("other/function.php");
 if(empty($_COOKIE['apikey'])) {
-    $backg = 'background-image: url(/data/1.ong);';
+    $wallpaper = 'background-image: url(/data/1.png);';
 } else {
     $api = $_COOKIE['apikey'];
-    $settings = settings($con,$api);
-    $walld = $api = $settings['wallpaper'];
-    $backg = "background-image: url(/data/$walld);";
+    include("other/general.php");
 }
 ?>
 <!DOCTYPE html>
@@ -15,7 +13,7 @@ if(empty($_COOKIE['apikey'])) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Re:PowerPC - Uploads Lite</title>
+<title>Re:PowerPC - Changelog</title>
 <link rel="stylesheet" href="/css/style.css">
 <style>
     img {
@@ -23,7 +21,8 @@ if(empty($_COOKIE['apikey'])) {
     height: auto; 
     }
     body {
-        <?php print $backg; ?>
+                background-image: url(<?php echo $wallpaper; ?>);
+                <?php echo $parameters; ?>
     }
 </style>
 <link rel="icon" type="image/x-icon" href="/data/icon.png">
@@ -32,8 +31,7 @@ if(empty($_COOKIE['apikey'])) {
     <center><div class="files">
     <h2><b>Changelog</b></h2>
 <?php
-include_once '/other/con.php';
-$result = mysqli_query($con,"SELECT * FROM chng");
+$result = mysqli_query($con,"SELECT * FROM chng ORDER BY date DESC");
 ?>
 <?php
 if (mysqli_num_rows($result) > 0) {
